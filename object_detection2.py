@@ -17,6 +17,7 @@
 
 ## but I changed it to make it more understandable to me.
 
+import RPi.GPIO as GPIO
 
 # Import packages
 import os
@@ -161,6 +162,16 @@ if camera_type == 'picamera':
 
             # Draw a circle at center of object
             cv2.circle(frame,(x,y), 5, (75,13,180), -1)
+
+            # desactivamos mensajes de error
+            GPIO.setwarnings(False)
+            # indicamos el uso de  la identificacion BCM para los GPIO
+            GPIO.setmode(GPIO.BCM)
+            # indicamos que el GPIO18 es de salida de corriente
+            GPIO.setup(18,GPIO.OUT)
+            # damos corriente al pin
+            GPIO.output(18, True)
+            #GPIO.output(18, False)
             
 
         cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
@@ -179,6 +190,8 @@ if camera_type == 'picamera':
         rawCapture.truncate(0)
 
     camera.close()
+    GPIO.output(18, False)
+
 
 ### USB webcam ###
 elif camera_type == 'usb':
