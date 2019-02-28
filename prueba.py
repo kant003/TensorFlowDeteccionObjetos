@@ -25,18 +25,18 @@ p.start(2.5) # Initialization
 def SetAngle(angle):
 	duty = angle / 18 + 2
 	GPIO.output(servoPIN, True)
-	pwm.ChangeDutyCycle(duty)
-	sleep(1)
+	p.ChangeDutyCycle(duty)
+	time.sleep(1)
 	GPIO.output(servoPIN, False)
-	pwm.ChangeDutyCycle(0)  
+	p.ChangeDutyCycle(0)  
 
 try:
   while True:
     SetAngle(90) 
-    sleep(20000)
+    time.sleep(1)
+    SetAngle(90)
+    time.sleep(20000)
     SetAngle(20)
-    sleep(20000)
-    SetAngle(-90)
 except KeyboardInterrupt:
   p.stop()
   GPIO.cleanup()
