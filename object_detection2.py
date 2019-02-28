@@ -200,7 +200,8 @@ if camera_type == 'picamera':
             elif x < (IM_WIDTH/2.0):
                 print('bajando grados') 
             
-        SetAngle(90)
+        SetAngle(grado)
+        print(grado)
         time.sleep(10)
 
         cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
