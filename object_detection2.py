@@ -30,7 +30,7 @@ import argparse
 import sys
 
 
-## configuramos GPIO
+## configuramos GPIO buzzer
 # desactivamos mensajes de error
 GPIO.setwarnings(False)
 # indicamos el uso de  la identificacion BCM para los GPIO
@@ -38,7 +38,24 @@ GPIO.setmode(GPIO.BCM)
 # indicamos que el GPIO18 es de salida de corriente
 GPIO.setup(18,GPIO.OUT)
 
+## configuramos GPIO servo
 
+servoPIN = 17
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(servoPIN, GPIO.OUT)
+
+p = GPIO.PWM(servoPIN, 50) # GPIO 17 for PWM with 50Hz
+p.start(2.5) # Initialization
+
+grado = 90
+
+def SetAngle(angle):
+	duty = angle / 18 + 2
+	GPIO.output(servoPIN, True)
+	p.ChangeDutyCycle(duty)
+	time.sleep(1)
+	GPIO.output(servoPIN, False)
+	p.ChangeDutyCycle(0)  
 
 # Set up camera constants
 #IM_WIDTH = 1280
@@ -183,7 +200,8 @@ if camera_type == 'picamera':
             elif x < (IM_WIDTH/2.0):
                 print('bajando grados') 
             
-            
+        SetAngle(90)
+        time.sleep(10)
 
         cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
 
@@ -194,13 +212,29 @@ if camera_type == 'picamera':
         time1 = (t2-t1)/freq
         frame_rate_calc = 1/time1
 
-        if cv2.waitKey(10) == ord('s'):
+
+        k = cv2.waitKey(10)
+        if k==27:    # Esc key to stop
+            break
+        elif k==-1:  # normally -1 returned,so don't print it
+            continue
+        elif k==ord('q'):  
+            grado=grado-10
+        elif k==ord('w'):  
+            grado=grado+10
+        elif k==ord('s'):  
             print('sonido off')
             GPIO.output(18, False)
+        else:
+            print(k) # else print its value
+
+        #if cv2.waitKey(10) == ord('s'):
+        #    print('sonido off')
+        #    GPIO.output(18, False)
 
         # Press 'q' to quit
-        if cv2.waitKey(10) == ord('q'):
-            break
+        #if cv2.waitKey(10) == ord('q'):
+        #    break
 
         
         
