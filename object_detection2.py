@@ -18,7 +18,7 @@
 ## but I changed it to make it more understandable to me.
 
 import RPi.GPIO as GPIO
-import time
+#import time
 
 
 # Import packages
@@ -41,7 +41,6 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(18,GPIO.OUT)
 
 ## configuramos GPIO servo
-
 servoPIN = 17
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(servoPIN, GPIO.OUT)
@@ -51,13 +50,13 @@ p.start(2.5) # Initialization
 
 grado = 90
 
-def SetAngle(angle):
-	duty = angle / 18 + 2
-	GPIO.output(servoPIN, True)
-	p.ChangeDutyCycle(duty)
-	time.sleep(1)
-	GPIO.output(servoPIN, False)
-	p.ChangeDutyCycle(0)  
+# def SetAngle(angle):
+# 	duty = angle / 18 + 2
+# 	GPIO.output(servoPIN, True)
+# 	p.ChangeDutyCycle(duty)
+# 	time.sleep(1)
+# 	GPIO.output(servoPIN, False)
+# 	p.ChangeDutyCycle(0)  
 
 # Set up camera constants
 #IM_WIDTH = 1280
@@ -204,7 +203,7 @@ if camera_type == 'picamera':
                 print('bajando grados') 
                 grado += 10
             
-        SetAngle(grado)
+        #SetAngle(grado)
         print(grado)
         #time.sleep(10)
 
