@@ -18,7 +18,7 @@
 ## but I changed it to make it more understandable to me.
 
 import RPi.GPIO as GPIO
-#import time
+import time
 
 
 # Import packages
@@ -50,13 +50,13 @@ p.start(2.5) # Initialization
 
 grado = 90
 
-# def SetAngle(angle):
-# 	duty = angle / 18 + 2
-# 	GPIO.output(servoPIN, True)
-# 	p.ChangeDutyCycle(duty)
-# 	time.sleep(1)
-# 	GPIO.output(servoPIN, False)
-# 	p.ChangeDutyCycle(0)  
+def SetAngle(angle):
+    duty = angle / 18 + 2
+    GPIO.output(servoPIN, True)
+    p.ChangeDutyCycle(duty)
+    time.sleep(1)
+    GPIO.output(servoPIN, False)
+    p.ChangeDutyCycle(0)  
 
 # Set up camera constants
 #IM_WIDTH = 1280
@@ -203,9 +203,9 @@ if camera_type == 'picamera':
                 print('bajando grados') 
                 grado += 10
             
-        #SetAngle(grado)
+        SetAngle(grado)
         print(grado)
-        #time.sleep(10)
+        time.sleep(10)
 
 
         cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
@@ -222,7 +222,8 @@ if camera_type == 'picamera':
         if k==27:    # Esc key to stop
             break
         elif k==-1:  # normally -1 returned,so don't print it
-            continue
+            pass
+            #continue
         elif k==ord('q'):  
             grado=grado-10
         elif k==ord('w'):  
