@@ -199,11 +199,13 @@ if camera_type == 'picamera':
             if x > (IM_WIDTH/2.0):
                 print('aumentando grados')
                 grado -= 10
+                SetAngle(grado)
             elif x < (IM_WIDTH/2.0):
                 print('bajando grados') 
                 grado += 10
+                SetAngle(grado)
             
-        SetAngle(grado)
+        
         print(grado)
         time.sleep(10)
 
