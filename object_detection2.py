@@ -154,12 +154,15 @@ if camera_type == 'picamera':
             min_score_thresh=0.40)
 
         # 77 es un movil
-        if ( int(classes[0][0]) == 77 ):
+        if int(classes[0][0]) == 77:
+            print('Detectado')
             x = int(((boxes[0][0][1]+boxes[0][0][3])/2)*IM_WIDTH)
             y = int(((boxes[0][0][0]+boxes[0][0][2])/2)*IM_HEIGHT)
 
             # Draw a circle at center of object
             cv2.circle(frame,(x,y), 5, (75,13,180), -1)
+            
+
         cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
 
         # All the results have been drawn on the frame, so it's time to display it.
