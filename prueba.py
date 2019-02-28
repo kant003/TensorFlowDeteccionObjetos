@@ -7,29 +7,37 @@
 # indicamos que el GPIO18 es de salida de corriente
 #GPIO.setup(18,GPIO.OUT)
 # damos corriente al pin
-GPIO.output(18, True)
+#GPIO.output(18, True)
 #GPIO.output(18, False)
 
 
-import RPi.GPIO as GPIO    #Importamos la libreria RPi.GPIO
-import time                #Importamos time para poder usar time.sleep
+import RPi.GPIO as GPIO
+import time
 
-GPIO.setmode(GPIO.BOARD)   #Ponemos la Raspberry en modo BOARD
-GPIO.setup(21,GPIO.OUT)    #Ponemos el pin 21 como salida
-p = GPIO.PWM(21,50)        #Ponemos el pin 21 en modo PWM y enviamos 50 pulsos por segundo
-p.start(7.5)               #Enviamos un pulso del 7.5% para centrar el servo
+servoPIN = 17
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(servoPIN, GPIO.OUT)
 
-try:                 
-    while True:      #iniciamos un loop infinito
-
-        p.ChangeDutyCycle(4.5)    #Enviamos un pulso del 4.5% para girar el servo hacia la izquierda
-        time.sleep(0.5)           #pausa de medio segundo
-        p.ChangeDutyCycle(10.5)   #Enviamos un pulso del 10.5% para girar el servo hacia la derecha
-        time.sleep(0.5)           #pausa de medio segundo
-        p.ChangeDutyCycle(7.5)    #Enviamos un pulso del 7.5% para centrar el servo de nuevo
-        time.sleep(0.5)           #pausa de medio segundo
-
-except KeyboardInterrupt:         #Si el usuario pulsa CONTROL+C entonces...
-    p.stop()                      #Detenemos el servo 
-    GPIO.cleanup()                #Limpiamos los pines GPIO de la Raspberry y cerramos el script
-    
+p = GPIO.PWM(servoPIN, 50) # GPIO 17 for PWM with 50Hz
+p.start(2.5) # Initialization
+try:
+  while True:
+    p.ChangeDutyCycle(5)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(7.5)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(10)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(12.5)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(10)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(7.5)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(5)
+    time.sleep(0.5)
+    p.ChangeDutyCycle(2.5)
+    time.sleep(0.5)
+except KeyboardInterrupt:
+  p.stop()
+  GPIO.cleanup()
