@@ -41,10 +41,10 @@ GPIO.setup(18,GPIO.OUT)
 
 
 # Set up camera constants
-IM_WIDTH = 1280
-IM_HEIGHT = 720
-#IM_WIDTH = 640    Use smaller resolution for
-#IM_HEIGHT = 480   slightly faster framerate
+#IM_WIDTH = 1280
+#IM_HEIGHT = 720
+IM_WIDTH = 640    Use smaller resolution for
+IM_HEIGHT = 480   slightly faster framerate
 
 # Select camera type (if user enters --usbcam when calling this script,
 # a USB webcam will be used)
@@ -194,12 +194,15 @@ if camera_type == 'picamera':
         time1 = (t2-t1)/freq
         frame_rate_calc = 1/time1
 
+        if cv2.waitKey(10) == ord('s'):
+            print('sonido off')
+            GPIO.output(18, False)
+
         # Press 'q' to quit
-        if cv2.waitKey(1) == ord('q'):
+        if cv2.waitKey(10) == ord('q'):
             break
 
-        if cv2.waitKey(1) == ord('s'):
-            GPIO.output(18, False)
+        
         
         rawCapture.truncate(0)
 
@@ -251,6 +254,9 @@ elif camera_type == 'usb':
         # Press 'q' to quit
         if cv2.waitKey(1) == ord('q'):
             break
+
+        if cv2.waitKey(1) == ord('s'):
+            GPIO.output(18, False)
 
     camera.release()
 
