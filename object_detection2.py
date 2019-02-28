@@ -209,6 +209,7 @@ if camera_type == 'picamera':
                 print(grado)
             
         
+        
         #print(grado)
         #time.sleep(10)
 
