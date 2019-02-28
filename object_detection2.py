@@ -29,6 +29,17 @@ import tensorflow as tf
 import argparse
 import sys
 
+
+## configuramos GPIO
+# desactivamos mensajes de error
+GPIO.setwarnings(False)
+# indicamos el uso de  la identificacion BCM para los GPIO
+GPIO.setmode(GPIO.BCM)
+# indicamos que el GPIO18 es de salida de corriente
+GPIO.setup(18,GPIO.OUT)
+
+
+
 # Set up camera constants
 IM_WIDTH = 1280
 IM_HEIGHT = 720
@@ -157,21 +168,18 @@ if camera_type == 'picamera':
         # 77 es un movil
         if int(classes[0][0]) == 77:
             print('Detectado')
+            # damos corriente al pin
+            GPIO.output(18, True)
+            #GPIO.output(18, False)
+            
             x = int(((boxes[0][0][1]+boxes[0][0][3])/2)*IM_WIDTH)
             y = int(((boxes[0][0][0]+boxes[0][0][2])/2)*IM_HEIGHT)
 
             # Draw a circle at center of object
             cv2.circle(frame,(x,y), 5, (75,13,180), -1)
 
-            # desactivamos mensajes de error
-            GPIO.setwarnings(False)
-            # indicamos el uso de  la identificacion BCM para los GPIO
-            GPIO.setmode(GPIO.BCM)
-            # indicamos que el GPIO18 es de salida de corriente
-            GPIO.setup(18,GPIO.OUT)
-            # damos corriente al pin
-            GPIO.output(18, True)
-            #GPIO.output(18, False)
+            
+            
             
 
         cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
