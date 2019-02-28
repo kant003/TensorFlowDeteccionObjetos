@@ -18,6 +18,8 @@
 ## but I changed it to make it more understandable to me.
 
 import RPi.GPIO as GPIO
+import time
+
 
 # Import packages
 import os
@@ -197,12 +199,14 @@ if camera_type == 'picamera':
 
             if x > (IM_WIDTH/2.0):
                 print('aumentando grados')
+                grado -= 10
             elif x < (IM_WIDTH/2.0):
                 print('bajando grados') 
+                grado += 10
             
         SetAngle(grado)
         print(grado)
-        time.sleep(10)
+        #time.sleep(10)
 
 
         cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
