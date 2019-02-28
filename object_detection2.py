@@ -204,6 +204,7 @@ if camera_type == 'picamera':
         print(grado)
         time.sleep(10)
 
+
         cv2.putText(frame,"FPS: {0:.2f}".format(frame_rate_calc),(30,50),font,1,(255,255,0),2,cv2.LINE_AA)
 
         # All the results have been drawn on the frame, so it's time to display it.
